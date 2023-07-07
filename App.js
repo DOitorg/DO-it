@@ -1,5 +1,5 @@
 import "react-native-gesture-handler";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, SafeAreaView } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
@@ -20,7 +20,7 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         {loggedIn ? (
-          <Stack.Screen name="Home" children={() => <HomeScreen />} />
+          <Stack.Screen name="Home" component={HomeScreen} />
         ) : (
           <Stack.Screen
             name="Login"

@@ -3,7 +3,7 @@ import React from "react";
 
 const SettingScreen = () => {
   return (
-    <View>
+    <View style={styles.container}>
       <Text>SettingScreen</Text>
     </View>
   );
@@ -11,4 +11,11 @@ const SettingScreen = () => {
 
 export default SettingScreen;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    height:"100%"
+  },
+});

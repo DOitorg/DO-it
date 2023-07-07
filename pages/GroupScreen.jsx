@@ -6,12 +6,15 @@ const Stack = createStackNavigator();
 
 const GroupScreen = ({ enrollHandler }) => {
   return (
-    <Stack.Navigator initialRouteName="ListOfGroups">
+    <Stack.Navigator
+      initialRouteName="ListOfGroups"
+      screenOptions={{ headerShown: false }}
+    >
       <Stack.Screen name="ListOfGroups" component={ListOfGroups} />
+      <Stack.Screen name="SingleGroup" component={SingleGroup} />
       <Stack.Screen
-        name="SingleGroup"
-        children={() => <SingleGroup enrollHandler={enrollHandler} />}
-        screenOptions={{ presentation: "modal" }}
+        name="PaymentPage"
+        children={() => <PaymentPage enrollHandler={enrollHandler} />}
       />
     </Stack.Navigator>
   );
@@ -19,7 +22,7 @@ const GroupScreen = ({ enrollHandler }) => {
 
 const ListOfGroups = ({ navigation }) => {
   return (
-    <View>
+    <View style={styles.container}>
       <Text>ListOfGroups</Text>
       <TouchableOpacity onPress={() => navigation.navigate("SingleGroup")}>
         <Text>View</Text>
@@ -28,12 +31,23 @@ const ListOfGroups = ({ navigation }) => {
   );
 };
 
-const SingleGroup = ({ enrollHandler }) => {
+const SingleGroup = ({ navigation }) => {
   return (
-    <View>
+    <View style={styles.container}>
       <Text>SingleGroup</Text>
-      <TouchableOpacity onPress={enrollHandler}>
+      <TouchableOpacity onPress={() => navigation.navigate("PaymentPage")}>
         <Text>Enroll</Text>
+      </TouchableOpacity>
+    </View>
+  );
+};
+
+const PaymentPage = ({ enrollHandler }) => {
+  return (
+    <View style={styles.container}>
+      <Text>PaymentPage</Text>
+      <TouchableOpacity onPress={enrollHandler}>
+        <Text>Pay Now</Text>
       </TouchableOpacity>
     </View>
   );
@@ -41,4 +55,11 @@ const SingleGroup = ({ enrollHandler }) => {
 
 export default GroupScreen;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    height: "100%",
+  },
+});
