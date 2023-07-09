@@ -22,10 +22,8 @@ const LoginScreen = ({ loginHandler }) => {
             The seed of every habit is a single tiny decision
           </Text>
 
-          <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText} onPress={loginHandler}>
-              Get Started
-            </Text>
+          <TouchableOpacity style={styles.button} onPress={loginHandler}>
+            <Text style={styles.buttonText}>Get Started</Text>
           </TouchableOpacity>
         </View>
       </ImageBackground>

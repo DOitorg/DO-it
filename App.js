@@ -20,7 +20,8 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         {loggedIn ? (
-          <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen name="Home" 
+          children={() => <HomeScreen loginHandler={loginHandler} />}          />
         ) : (
           <Stack.Screen
             name="Login"

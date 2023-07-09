@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
-const ProfileScreen = ({ navigation }) => {
+const ProfileScreen = ({ navigation, loginHandler }) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
@@ -65,12 +65,12 @@ const ProfileScreen = ({ navigation }) => {
             <Ionicons name="chevron-forward" size={24} color="#00C2FF" />
           </TouchableOpacity>
         </View>
-        <View style={styles.card}>
+        <TouchableOpacity style={styles.card} onPress={loginHandler}>
           <Text style={styles.cardTitle}>Log out</Text>
-          <TouchableOpacity style={styles.cardArrow}>
+          <View style={styles.cardArrow}>
             <Ionicons name="chevron-forward" size={24} color="#00C2FF" />
-          </TouchableOpacity>
-        </View>
+          </View>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );

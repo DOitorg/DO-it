@@ -20,7 +20,7 @@ import SingleGroupChat from "./SingleGroupChat";
 const TopTab = createMaterialTopTabNavigator();
 const Stack = createStackNavigator();
 
-const HomeScreen = () => {
+const HomeScreen = ({ loginHandler }) => {
   const [enrolled, setEnrolled] = React.useState(false);
 
   const enrollHandler = () => {
@@ -42,7 +42,8 @@ const HomeScreen = () => {
 
             <Stack.Screen
               name="Profile"
-              component={ProfileScreen}
+              // component={ProfileScreen}
+              children={() => <ProfileScreen loginHandler={loginHandler} />}
               screenOptions={{ presentation: "modal" }}
             ></Stack.Screen>
           </Stack.Navigator>
@@ -55,7 +56,8 @@ const HomeScreen = () => {
           />
           <Stack.Screen
             name="Profile"
-            component={ProfileScreen}
+            // component={ProfileScreen}
+            children={() => <ProfileScreen loginHandler={loginHandler} />}
             screenOptions={{ presentation: "modal" }}
           />
         </Stack.Navigator>
