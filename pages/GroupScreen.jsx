@@ -1,6 +1,9 @@
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
+import ListOfGroupsComp from "../components/ListOfGroupsComp";
+import SingleGroupComp from "../components/SingleGroupComp";
+import PaymentComp from "../components/PaymentComp";
 
 const Stack = createStackNavigator();
 
@@ -10,11 +13,11 @@ const GroupScreen = ({ enrollHandler }) => {
       initialRouteName="ListOfGroups"
       screenOptions={{ headerShown: false }}
     >
-      <Stack.Screen name="ListOfGroups" component={ListOfGroups} />
-      <Stack.Screen name="SingleGroup" component={SingleGroup} />
+      <Stack.Screen name="ListOfGroups" component={ListOfGroupsComp} />
+      <Stack.Screen name="SingleGroup" component={SingleGroupComp} />
       <Stack.Screen
         name="PaymentPage"
-        children={() => <PaymentPage enrollHandler={enrollHandler} />}
+        children={() => <PaymentComp enrollHandler={enrollHandler} />}
       />
     </Stack.Navigator>
   );
