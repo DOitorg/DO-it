@@ -47,7 +47,10 @@ const Message = ({
       {name && <Text style={nameStyle}>{name}</Text>}
       {isFirst && <Image source={dumbell} style={styles.dumbell} />}
       {message.includes("https://maps.app.goo.gle") ? (
-        <TouchableOpacity onPress={() => handleLinkPress(message)}>
+        <TouchableOpacity
+          onPress={() => handleLinkPress(message)}
+          disabled
+        >
           <Text style={styles.messageLink}>{message}</Text>
         </TouchableOpacity>
       ) : (
@@ -66,12 +69,7 @@ const Message = ({
             disabled={reacted}
           >
             <Image source={tick} style={styles.reactIcon} />
-            <Text
-              style={[
-                styles.reactText,
-                reacted && { color: "#DFDEDF" },
-              ]}
-            >
+            <Text style={[styles.reactText, reacted && { color: "#DFDEDF" }]}>
               {reactCount.tick}
             </Text>
           </TouchableOpacity>
@@ -85,12 +83,7 @@ const Message = ({
             disabled={reacted}
           >
             <Image source={like} style={styles.reactIcon} />
-            <Text
-              style={[
-                styles.reactText,
-                reacted && { color: "#DFDEDF" },
-              ]}
-            >
+            <Text style={[styles.reactText, reacted && { color: "#DFDEDF" }]}>
               {reactCount.like}
             </Text>
           </TouchableOpacity>
@@ -247,7 +240,7 @@ const styles = StyleSheet.create({
     color: "#DFDEDF",
     fontSize: 17,
   },
-  chatView:{
+  chatView: {
     flex: 1,
     marginBottom: "20%",
   },
