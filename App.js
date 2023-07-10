@@ -10,22 +10,29 @@ import LoginScreen from "./pages/LoginScreen";
 const Stack = createStackNavigator();
 
 export default function App() {
-  const [loggedIn, setLoggedIn] = React.useState(false);
+  const [isAuthenticated, setIsAuthenticated] = React.useState(false);
 
-  const loginHandler = () => {
-    setLoggedIn((prev) => !prev);
+  const handleLogin = () => {
+    setIsAuthenticated(true);
   };
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+  };
+  
 
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        {loggedIn ? (
-          <Stack.Screen name="Home" 
-          children={() => <HomeScreen loginHandler={loginHandler} />}          />
+        {isAuthenticated ? (
+          <Stack.Screen
+            name="Home"
+            children={() => <HomeScreen loginHandler={handleLogout} />}
+          />
         ) : (
           <Stack.Screen
             name="Login"
-            children={() => <LoginScreen loginHandler={loginHandler} />}
+            children={() => <LoginScreen loginHandler={handleLogin} />}
           />
         )}
       </Stack.Navigator>

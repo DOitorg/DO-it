@@ -8,8 +8,12 @@ import {
   SafeAreaView,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
-const ProfileScreen = ({ navigation, loginHandler }) => {
+const ProfileScreen = ({ loginHandler }) => {
+
+  const navigation = useNavigation();
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
