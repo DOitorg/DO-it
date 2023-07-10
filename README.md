@@ -5,7 +5,7 @@
   
  <h1 style="color: #9AF444;background-color: black;">Welcome to the DO it app!</h1>
   <div align="center">
-      <img src="Frame 4.png" style="width:70%"  alt="DO it App Image">
+      <img src="assets/Frame 4.png" style="width:70%"  alt="DO it App Image">
   </div>
 
   <h2>What is the Problem?</h2>
