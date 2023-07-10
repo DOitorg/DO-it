@@ -30,7 +30,6 @@ contract InvestmentContract {
 
     receive() external payable {}
 
-    // working
     function invest() external payable onlyValidUser returns (bool) {
         require(msg.sender != admin, "Admin not allowed");
         require(msg.value > charges, "Amount should be greater than 0.1 ETH");
@@ -49,53 +48,33 @@ contract InvestmentContract {
         return true;
     }
 
-    function removeUser() external returns (bool) {
-        require(investments[msg.sender] > 0, "User has no investment.");
+    // function removeUser() external returns (bool) {
+    //     require(investments[msg.sender] > 0, "User has no investment.");
 
-        for (uint256 i = 0; i < validUsers.length; i++) {
-            if (validUsers[i] == payable(msg.sender)) {
-                validUsers[i] = admin;
-                return true;
-            }
-        }
-        // if user is not found in validUsers array, return false
-        return false;
-        
-    }
+    //     for (uint256 i = 0; i < validUsers.length; i++) {
+    //         if (validUsers[i] == payable(msg.sender)) {
+    //             delete validUsers[i];
+    //             break;
+    //         }
+    //     }
 
-    function getValidUsersCount() external view returns (uint256) {
-        uint256 count = 0;
-        for (uint256 i = 0; i < validUsers.length; i++) {
-            if (validUsers[i] != admin) {
-                count++;
-            }
-        }
-        return count;
-    }
+    //     return true;
+    // }
 
-    //working
     function distributeFunds() external onlyAdmin returns (bool) {
-        // check if there are any valid users
-        uint256 validUsersCount = 0;
-        for (uint256 i = 0; i < validUsers.length; i++) {
-            if (validUsers[i] != admin) {
-                validUsersCount++;
-            }
-        }
-        // if no valid users, return false
-        if (validUsersCount == 0) {
+        uint256 validUsersLength = validUsers.length;
+
+        if (validUsersLength == 0) {
             return false;
         }
 
-        uint256 amountPerUser = totalInvestmentAmount / validUsersCount;
+        uint256 amountPerUser = totalInvestmentAmount / validUsersLength;
 
         for (uint256 i = 0; i < validUsers.length; i++) {
-            // if user is not admin, send the amount
-            if (validUsers[i] != admin) {
-                address payable user = validUsers[i];
-                user.transfer(amountPerUser);
-            }
+            address payable user = validUsers[i];
+            user.transfer(amountPerUser);
         }
+
         return true;
     }
 
@@ -111,47 +90,17 @@ contract InvestmentContract {
         return totalInvestedUserCount;
     }
 
-    
+    function getValidUsersCount() external view returns (uint256) {
+        return validUsers.length;
+    }
 
     function getInvalidUsersCount() external view returns (uint256) {
-        // finding actual Invalid users
-        uint256 count = 0;
-        for (uint256 i = 0; i < validUsers.length; i++) {
-            if (validUsers[i] == admin) {
-                count++;
-            }
-        }
-        return count;
+        return totalInvestedUserCount - validUsers.length;
     }
 
     function getAdminBalance() external view returns (uint256) {
         return adminBalance;
     }
-
-    // function getMyProfit() external view returns (uint256) {
-
-    //     uint256 validUserCount = 0;
-    //     for (uint256 i = 0; i < validUsers.length; i++) {
-    //         if (validUsers[i] != admin) {
-    //             validUserCount++;
-    //         }
-    //     }
-
-    //     if(validUserCount == 0) {
-    //         return 0;
-    //     }
-
-    //     // check if user is in the validUsers array and return the InvestMent+Profit
-    //     for (uint256 i = 0; i < validUsers.length; i++) {
-    //         if (validUsers[i] == payable(msg.sender)) {
-    //             unit256 profit = (totalInvestmentAmount / validUserCount) - investments[msg.sender];
-    //             if(profit < 0) {
-    //                 return profit*(-1);
-    //             }
-    //         }
-    //     }
-    //     return 0;
-    // }
 
     function isUserValid() external view returns (bool) {
         // Find the user in validUsers array and return true if found
