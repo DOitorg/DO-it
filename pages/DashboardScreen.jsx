@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
 import React from "react";
-
+import users from "../assets/users.png"
+import users2 from "../assets/users2.png"
 const DashboardScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
@@ -16,14 +17,14 @@ const DashboardScreen = ({ navigation }) => {
           <TouchableOpacity>
             <View style={styles.card}>
               <Text style={styles.text_heading}>You Invested</Text>
-              <Text style={styles.text_money}>₹ 2000</Text>
+              <Text style={styles.text_money}>₹ 200</Text>
             </View>
           </TouchableOpacity>
 
           <TouchableOpacity>
             <View style={styles.card}>
               <Text style={styles.text_heading}>Profit Gained</Text>
-              <Text style={styles.text_profit}>₹ 272</Text>
+              <Text style={styles.text_money}>₹ 272</Text>
             </View>
           </TouchableOpacity>
         </View>
@@ -33,12 +34,14 @@ const DashboardScreen = ({ navigation }) => {
             <View style={styles.card_2}>
               <Text style={styles.text_heading}>Active Participants</Text>
               <Text style={styles.text_money}>100</Text>
+          <Image source={users} style={styles.users} />
             </View>
           </TouchableOpacity>
           <TouchableOpacity>
             <View style={styles.card_2}>
               <Text style={styles.text_heading}>Participants who Lost.</Text>
-              <Text style={styles.text_invest}>12</Text>
+              <Text style={styles.text_money}>12</Text>
+          <Image source={users2} style={styles.users} />
             </View>
           </TouchableOpacity>
         </View>
@@ -100,11 +103,8 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     padding: 10,
-  },
-  cardContainer: {
-    flexDirection: "row",
+    justifyContent: "space-around",
     gap: 20,
-    justifyContent: "center",
   },
   profileIcon: {
     width: 40,
@@ -113,36 +113,35 @@ const styles = StyleSheet.create({
     top: -45,
     right: 20,
   },
+  users:{
+width: 90,
+height:20,
+  },
   card: {
-    width: 141,
-    height: 110,
+    width: 151,
+    height:90,
     borderWidth: 2,
     borderColor: "#474343",
     borderRadius: 8,
-    marginTop: 10,
-    marginRight: 26,
-    justifyContent: "center",
-    alignItems: "center",
+    padding: 8,
   },
   card_2: {
-    width: 141,
-    height: 147,
+    width: 151,
+    height:137,
     borderWidth: 2,
+    padding:10,
     borderColor: "#474343",
     borderRadius: 8,
     marginTop: 10,
-    marginRight: 26,
-    justifyContent: "center",
-    alignItems: "center",
   },
   card_3: {
     width: 308,
-    height: 117,
+    height:117,
+    padding:10,
     borderWidth: 2,
     borderColor: "#474343",
     borderRadius: 8,
     marginTop: 10,
-    marginRight: 26,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -150,12 +149,10 @@ const styles = StyleSheet.create({
   text_invest: {
     color: "#FF0084",
     fontSize: 20,
-    textAlign: "center",
   },
   text_heading: {
     color: "#F0C045",
     fontSize: 20,
-    textAlign: "center",
   },
   text_totalMoney: {
     color: "#FF0084",
@@ -166,19 +163,16 @@ const styles = StyleSheet.create({
   },
   text_money: {
     color: "#DFDEDF",
-    fontSize: 35,
-    textAlign: "center",
+    fontSize: 25,
   },
   text_profit: {
     color: "#9AF444",
     fontSize: 20,
-    textAlign: "center",
   },
   text_money2: {
     color: "#F0C045",
 
     fontSize: 35,
-    textAlign: "center",
   },
   text_money_3: {
     color: "#F0C045",
@@ -191,12 +185,7 @@ const styles = StyleSheet.create({
 
   receivable: {
     flexDirection: "row",
-
-    // backgroundColor: "pink",
     justifyContent: "space-between",
-    // alignItems: "center",
-    // marginRight: 40,
-    // paddingRight: 40,
   },
 
   cardImage: {
@@ -206,7 +195,6 @@ const styles = StyleSheet.create({
   },
   cardText: {
     fontSize: 16,
-    textAlign: "center",
     color: "#00C2FF",
   },
   descText: {

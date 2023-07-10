@@ -15,29 +15,85 @@ import dumbell from "../assets/dumbell.png";
 import cam from "../assets/cam_btn.png";
 import location from "../assets/location_btn.png";
 
-const Message = ({ name, message, time, reactCount, isFirst }) => {
+const Message = ({
+  name,
+  message,
+  time,
+  reactCount,
+  isFirst,
+  isCurrentUser,
+  onReact,
+  undoReact,
+  reacted,
+}) => {
+  const bubbleStyle = isCurrentUser ? styles.bubbleCurrentUser : styles.bubble;
+  const messageStyle = isCurrentUser
+    ? styles.messageCurrentUser
+    : styles.message;
+  const nameStyle = isCurrentUser ? styles.nameCurrentUser : styles.name;
+
+  const handleReact = () => {
+    if (!reacted) {
+      onReact();
+    }
+  };
+
+  const handleUndoReact = () => {
+    undoReact();
+  };
+
   return (
-    <View style={[styles.bubble, isFirst && styles.firstBubble]}>
-      {name && <Text style={styles.name}>{name}</Text>}
+    <View style={[bubbleStyle, isFirst && styles.firstBubble]}>
+      {name && <Text style={nameStyle}>{name}</Text>}
       {isFirst && <Image source={dumbell} style={styles.dumbell} />}
       {message.includes("https://maps.app.goo.gle") ? (
         <TouchableOpacity onPress={() => handleLinkPress(message)}>
           <Text style={styles.messageLink}>{message}</Text>
         </TouchableOpacity>
       ) : (
-        <Text style={styles.message}>{message}</Text>
+        <Text style={messageStyle}>{message}</Text>
       )}
       {time && <Text style={styles.time}>{time}</Text>}
       {reactCount && (
         <View style={styles.react}>
-          <View style={styles.reactCount}>
+          <TouchableOpacity
+            onPress={handleReact}
+            onLongPress={handleUndoReact}
+            style={[
+              styles.reactCount,
+              reacted && { backgroundColor: "#484844" },
+            ]}
+            disabled={reacted}
+          >
             <Image source={tick} style={styles.reactIcon} />
-            <Text style={styles.reactText}>{reactCount.tick}</Text>
-          </View>
-          <View style={styles.reactCount}>
+            <Text
+              style={[
+                styles.reactText,
+                reacted && { color: "#DFDEDF" },
+              ]}
+            >
+              {reactCount.tick}
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={handleReact}
+            onLongPress={handleUndoReact}
+            style={[
+              styles.reactCount,
+              reacted && { backgroundColor: "#484844" },
+            ]}
+            disabled={reacted}
+          >
             <Image source={like} style={styles.reactIcon} />
-            <Text style={styles.reactText}>{reactCount.like}</Text>
-          </View>
+            <Text
+              style={[
+                styles.reactText,
+                reacted && { color: "#DFDEDF" },
+              ]}
+            >
+              {reactCount.like}
+            </Text>
+          </TouchableOpacity>
         </View>
       )}
     </View>
@@ -56,10 +112,9 @@ const ChatScreen = ({ navigation }) => {
         tick: 6,
         like: 4,
       },
+      reacted: false,
     },
   ]);
-
-  // useEffect(() => {}, []);
 
   const handleSendMessage = () => {
     if (typingMessage.trim() !== "") {
@@ -74,17 +129,42 @@ const ChatScreen = ({ navigation }) => {
           tick: 0,
           like: 0,
         },
+        reacted: false,
       };
       setMessages((prevMessages) => [...prevMessages, newMessage]);
       setTypingMessage("");
     }
   };
 
+  const handleReact = (index, reactionType) => {
+    setMessages((prevMessages) => {
+      const updatedMessages = [...prevMessages];
+      const message = updatedMessages[index];
+      if (reactionType === "tick") {
+        message.reactCount.tick++;
+        message.reactCount.like = 0;
+      } else if (reactionType === "like") {
+        message.reactCount.like++;
+        message.reactCount.tick = 0;
+      }
+      message.reacted = true;
+      return updatedMessages;
+    });
+  };
+
+  const handleUndoReact = (index) => {
+    setMessages((prevMessages) => {
+      const updatedMessages = [...prevMessages];
+      const message = updatedMessages[index];
+      message.reactCount.tick = 0;
+      message.reactCount.like = 0;
+      message.reacted = false;
+      return updatedMessages;
+    });
+  };
+
   return (
     <View style={styles.container}>
-
-      {/* <Text style={styles.taskText}>Exercise group #Verify Task</Text> */}
-
       <ScrollView
         style={styles.chatView}
         contentContainerStyle={styles.chatContent}
@@ -103,6 +183,10 @@ const ChatScreen = ({ navigation }) => {
             time={message.time}
             reactCount={message.reactCount}
             isFirst={index === 0}
+            isCurrentUser={message.name === "Your Name"}
+            onReact={() => handleReact(index, "tick")}
+            undoReact={() => handleUndoReact(index)}
+            reacted={message.reacted}
           />
         ))}
       </ScrollView>
@@ -126,7 +210,6 @@ const ChatScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     display: "flex",
-    // paddingTop: 50,
     height: "100%",
     paddingRight: 20,
     paddingLeft: 20,
@@ -136,6 +219,10 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 140,
     borderRadius: 8,
+  },
+  nameCurrentUser: {
+    color: "#F0C045",
+    textAlign: "right",
   },
   react: {
     flexDirection: "row",
@@ -160,7 +247,7 @@ const styles = StyleSheet.create({
     color: "#DFDEDF",
     fontSize: 17,
   },
-  chatView: {
+  chatView:{
     flex: 1,
     marginBottom: "20%",
   },
@@ -192,7 +279,6 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 0,
   },
-
   btn: {
     width: 40,
     height: 40,
@@ -213,6 +299,10 @@ const styles = StyleSheet.create({
     maxWidth: "100%",
     elevation: 1,
   },
+  name: {
+    color: "#F0C045",
+    paddingBottom: 5,
+  },
   bubble: {
     width: "70%",
     borderTopLeftRadius: 0,
@@ -220,28 +310,28 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 18,
     borderBottomLeftRadius: 18,
     backgroundColor: "#362f2f",
-    padding: 15,
+    padding: 12,
     marginBottom: 10,
   },
-  taskText: {
-    color: "#FF0084",
-    fontSize: 22,
-    paddingLeft: "2%",
-    paddingBottom: 10,
-    paddingTop: 10,
-    borderBottomColor: "white",
-    borderRightColor: "#141414",
-    borderLeftColor: "#141414",
-    borderTopColor: "#141414",
-    borderWidth: 1,
-  },
-  name: {
-    color: "#F0C045",
-    fontSize: 17,
+  bubbleCurrentUser: {
+    width: "70%",
+    borderTopLeftRadius: 18,
+    borderTopRightRadius: 0,
+    borderBottomRightRadius: 18,
+    borderBottomLeftRadius: 18,
+    backgroundColor: "#362f2f",
+    padding: 15,
+    marginBottom: 10,
+    alignSelf: "flex-end",
   },
   message: {
     color: "#DFDEDF",
     fontSize: 17,
+  },
+  messageCurrentUser: {
+    color: "#DFDEDF",
+    fontSize: 17,
+    textAlign: "right",
   },
   profileIcon: {
     width: 40,

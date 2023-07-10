@@ -3,18 +3,18 @@ import {
   TouchableOpacity,
   StyleSheet,
   Text,
+  StatusBar,
   View,
   SafeAreaView,
 } from "react-native";
 import React from "react";
-
+// StatusBar.setBarStyle('light-content)'
 const PaymentComp = ({ enrollHandler }) => {
   return (
     <SafeAreaView
       style={{
         display: "flex",
         justifyContent: "space-between",
-        alignItems: "center",
         height: "100%",
         padding: 20,
         backgroundColor: "#101010",
@@ -22,7 +22,7 @@ const PaymentComp = ({ enrollHandler }) => {
         padddingTop: 50,
       }}
     >
-      <View>
+      <View style={{ alignItems: "center" }}>
         <Text
           style={{
             fontSize: 30,
@@ -74,44 +74,25 @@ const styles = StyleSheet.create({
   },
 
   paymentLogo: {
-    // backgroundColor: 'yellow',
     color: "#9AF444",
     fontSize: 35,
-    // backgroundColor: 'skyblue',
-    // flex: 1,
-    // textAlign: 'center',
-    paddingLeft: 54,
   },
 
   charges: {
-    // backgroundColor: 'red',
-    // color: '#ffffff',
     display: "flex",
-    marginLeft: 20,
-    // color: '#FF0084',
-    // fontFamily: "BeVietnamPro-Regular",
-    // fontSize: 20,
-    // fontStyle: 'normal',
-    // fontWeight: '400',
-    // lineHeight: 24,
-    marginBottom: 37,
-    // backgroundColor: 'green',
+    paddingBottom: 20,
   },
 
   charges_type: {
     color: "#FF0084",
-    // fontFamily: "BeVietnamPro-Regular",
     fontSize: 26,
     fontStyle: "normal",
     fontWeight: "400",
-    // lineHeight: 34,
   },
 
   charges_amount: {
-    // backgroundColor: 'blue',
     color: "#DFDEDF",
     fontSize: 26,
-    // fontWeight: 'bold',
   },
 
   button: {
@@ -134,10 +115,8 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "#101010",
     textAlign: "center",
-    // fontFamily: "Brygada 1918",
     fontSize: 20,
     letterSpacing: 0.5,
     fontWeight: "600",
-    // lineHeight: 16,
   },
 });

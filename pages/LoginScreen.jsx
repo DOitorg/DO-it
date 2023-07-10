@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
   },
   logo: {
     position: "absolute",
-    top: "20%",
+    top: "35%",
     width: 109,
     height: 60,
     marginBottom: 20,
