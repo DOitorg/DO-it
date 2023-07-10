@@ -8,8 +8,71 @@ import {
   SafeAreaView,
 } from "react-native";
 import React from "react";
+
+import {
+  WalletConnectModal,
+  useWalletConnectModal,
+} from "@walletconnect/modal-react-native";
+
+import { SignClient } from "@walletconnect/sign-client";
+
+import "@ethersproject/shims";
+import * as ethers from "ethers";
+
+const daiAddress = "0xa84533de6fe5c53ce846317507b7b13f3ff1f10e";
+import daiAbi from "../abi.json";
+
 // StatusBar.setBarStyle('light-content)'
+
+// const tx = {
+//   from: account,
+//   to: "0xBDE1EAE59cE082505bB73fedBa56252b1b9C60Ce", // Contract address
+//   data: "0x",
+//   gasPrice: "0x029104e28c",
+//   gasLimit: "0x5208",
+//   value: "0x00",
+// };
+
+// const result = await signClient.request({
+//   topic: session.topic,y
+
+//   chainId: "eip155:5",
+//   request: {
+//     method: "eth_sendTransaction",
+//     params: [tx],
+//   },
+// })
+
 const PaymentComp = ({ enrollHandler }) => {
+  console.log(daiAbi);
+
+  const { open, isConnected, address, provider } = useWalletConnectModal();
+
+  // const test = async (enrollHandler) => {
+  //   const web3Provider = new ethers.providers.Web3Provider(provider);
+  //   const signer = web3Provider.getSigner();
+
+  //   console.log(web3Provider, signer);
+
+  //   const contract = new ethers.Contract(daiAddress, daiAbi, signer);
+
+  //   console.log(contract);
+
+  //   const chainId = await signer.getChainId();
+
+  //   const tx = await contract.invest({
+  //     value: ethers.utils.parseEther("0.0002"),
+  //   });
+  //   await tx.wait();
+  //   console.log("Here", tx);
+
+  //   const res = await contract.invest({
+  //     value: ethers.utils.parseEther("0.0002"),
+  //   });
+
+  //   enrollHandler();
+  // };
+
   return (
     <SafeAreaView
       style={{
@@ -57,7 +120,10 @@ const PaymentComp = ({ enrollHandler }) => {
         </View>
       </View>
 
-      <TouchableOpacity style={styles.button} onPress={enrollHandler}>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={enrollHandler}
+      >
         <Text style={styles.buttonText}>Pay Now</Text>
       </TouchableOpacity>
     </SafeAreaView>

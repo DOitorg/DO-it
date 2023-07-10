@@ -17,7 +17,7 @@ const DashboardScreen = ({ navigation }) => {
           <TouchableOpacity>
             <View style={styles.card}>
               <Text style={styles.text_heading}>You Invested</Text>
-              <Text style={styles.text_money}>₹ 200</Text>
+              <Text style={styles.text_money}>₹ 2000</Text>
             </View>
           </TouchableOpacity>
 
@@ -50,7 +50,7 @@ const DashboardScreen = ({ navigation }) => {
           <View style={styles.card_3}>
             <View style={styles.receivable}>
               <Text style={styles.text_profit}>Receivable Sum :</Text>
-              <Text style={styles.text_money_3}>₹108</Text>
+              <Text style={styles.text_money_3}>₹2272</Text>
             </View>
             <View style={styles.receivable}>
               <Text style={styles.text_profit}>Days in streak :</Text>
